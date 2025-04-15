@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iCDM Manager</title>
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/tree-view.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/themes.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Left Panel (Tree View) -->
+        <div class="left-panel" id="leftPanel">
+            <h2>iCDM Explorer</h2>
+            <div class="tree-view" id="treeView">
+                <!-- Tree view will be populated by JavaScript -->
+                <div class="loading-indicator">Loading...</div>
+            </div>
+            
+            <!-- Quick Add Buttons for Root Nodes -->
+            <div class="quick-add-buttons">
+                <button class="add-button" onclick="showFullModal('createStakeholderModal')">+ Stakeholder</button>
+                <button class="add-button" onclick="showFullModal('createServiceModal')">+ Service</button>
+                <button class="add-button" onclick="showFullModal('createFolderModal')">+ Folder</button>
+            </div>
+        </div>
+        
+        <!-- Splitter for resizing panels -->
+        <div class="splitter" id="splitter"></div>
+        
+        <!-- Right Panel (Contextual Content) -->
+        <div class="right-panel" id="rightPanel">
+            <!-- Action Bar -->
+            <div class="action-bar" id="actionBar">
+                <div class="action-group">
+                    <button onclick="showFullModal('createStakeholderModal')" class="action-button">
+                        <span class="icon">👥</span> New Stakeholder Category
+                    </button>
+                    <button onclick="showFullModal('createServiceModal')" class="action-button">
+                        <span class="icon">🔧</span> New Service
+                    </button>
+                    <button onclick="showFullModal('createFolderModal')" class="action-button">
+                        <span class="icon">📁</span> New Folder
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Empty State Setup Guide -->
+            <div class="context-empty" id="emptyContext">
+                <h2>Welcome to iCDM Manager</h2>
+                <p>Your database is currently empty. Let's set up your system:</p>
+                
+                <div class="setup-guide">
+                    <div class="setup-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Create Stakeholder Categories</h3>
+                            <p>Define who will be impacted by your requirements</p>
+                            <form class="quick-form" id="quickStakeholderForm">
+                                <input type="text" placeholder="Category Name" id="quickStakeholderName">
+                                <button type="submit">Create</button>
+                            </form>
+                            <a href="#" onclick="showFullModal('createStakeholderModal')">More options...</a>
+                        </div>
+                    </div>
+                    
+                    <div class="setup-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Create Services</h3>
+                            <p>Define the services in your organization</p>
+                            <form class="quick-form" id="quickServiceForm">
+                                <input type="text" placeholder="Service Name" id="quickServiceName">
+                                <button type="submit">Create</button>
+                            </form>
+                            <a href="#" onclick="showFullModal('createServiceModal')">More options...</a>
+                        </div>
+                    </div>
+                    
+                    <div class="setup-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Create Drafting Groups</h3>
+                            <p>Set up folders to organize your needs and requirements</p>
+                            <form class="quick-form" id="quickFolderForm">
+                                <input type="text" placeholder="Folder Name" id="quickFolderName">
+                                <button type="submit">Create</button>
+                            </form>
+                            <a href="#" onclick="showFullModal('createFolderModal')">More options...</a>
+                        </div>
+                    </div>
+                    
+                    <div class="setup-help">
+                        <h4>What happens next?</h4>
+                        <p>After setting up these basic elements, you can:</p>
+                        <ul>
+                            <li>Create Operational Needs within folders</li>
+                            <li>Define Operational Requirements that implement those needs</li>
+                            <li>Establish impact relationships between items</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Context Panel for Selected Items -->
+            <div class="context-panel" id="contextPanel" style="display: none;">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <!-- Breadcrumbs will be populated by JavaScript -->
+                </div>
+                
+                <div class="context-header">
+                    <div class="context-title">
+                        <span class="icon" id="contextIcon">📁</span>
+                        <h2 id="contextTitle">Item Title</h2>
+                    </div>
+                    <div class="context-subtitle" id="contextSubtitle">Item details</div>
+                </div>
+                
+                <div class="context-content" id="contextContent">
+                    <!-- Content will be populated by JavaScript based on selection -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Forms -->
+        <!-- Modal Overlay -->
+        <div id="modalOverlay" class="modal-overlay" style="display: none;"></div>
+        
+        <!-- Create Stakeholder Category Modal -->
+        <div id="createStakeholderModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('createStakeholderModal')">&times;</span>
+                <h3>Create Stakeholder Category</h3>
+                <form id="createStakeholderForm">
+                    <div class="form-group">
+                        <label for="stakeholderName">Name:</label>
+                        <input type="text" id="stakeholderName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="stakeholderDescription">Description:</label>
+                        <textarea id="stakeholderDescription" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="closeModal('createStakeholderModal')">Cancel</button>
+                        <button type="submit">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Create Service Modal -->
+        <div id="createServiceModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('createServiceModal')">&times;</span>
+                <h3>Create Service</h3>
+                <form id="createServiceForm">
+                    <div class="form-group">
+                        <label for="serviceName">Name:</label>
+                        <input type="text" id="serviceName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceDescription">Description:</label>
+                        <textarea id="serviceDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentServiceId">Parent Service (Optional):</label>
+                        <select id="parentServiceId">
+                            <option value="">None (Root Service)</option>
+                            <!-- Will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="closeModal('createServiceModal')">Cancel</button>
+                        <button type="submit">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Create Folder Modal -->
+        <div id="createFolderModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('createFolderModal')">&times;</span>
+                <h3>Create Folder</h3>
+                <form id="createFolderForm">
+                    <div class="form-group">
+                        <label for="folderName">Name:</label>
+                        <input type="text" id="folderName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="folderDescription">Description:</label>
+                        <textarea id="folderDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentFolderId">Parent Folder (Optional):</label>
+                        <select id="parentFolderId">
+                            <option value="">None (Root Folder)</option>
+                            <!-- Will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="closeModal('createFolderModal')">Cancel</button>
+                        <button type="submit">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+<!-- Create Operational Need Modal -->
+<div id="createNeedModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeModal('createNeedModal')">&times;</span>
+        <h3>Create Operational Need</h3>
+        <form id="createNeedForm">
+            <input type="hidden" id="needFolderId">
+            <div class="form-group">
+                <label for="needName">Name:</label>
+                <input type="text" id="needName" required>
+            </div>
+            <div class="form-group">
+                <label for="needDescription">Description:</label>
+                <textarea id="needDescription" required></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="closeModal('createNeedModal')">Cancel</button>
+                <button type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Create Operational Requirement Modal -->
+<div id="createRequirementModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeModal('createRequirementModal')">&times;</span>
+        <h3>Create Operational Requirement</h3>
+        <form id="createRequirementForm">
+            <input type="hidden" id="requirementFolderId">
+            <div class="form-group">
+                <label for="requirementName">Name:</label>
+                <input type="text" id="requirementName" required>
+            </div>
+            <div class="form-group">
+                <label for="requirementDescription">Description:</label>
+                <textarea id="requirementDescription" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="implementedNeedId">Implements Need (Optional):</label>
+                <select id="implementedNeedId">
+                    <option value="">None</option>
+                    <!-- Will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="closeModal('createRequirementModal')">Cancel</button>
+                <button type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+</div>    </div>
+    
+    <!-- JavaScript Files -->
+    <script src="js/api-client.js"></script>
+    <script src="js/ui-helpers.js"></script>
+    <script src="js/tree-view.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

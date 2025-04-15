@@ -1,0 +1,29 @@
+services:
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - "7474:7474"  # HTTP
+      - "7473:7473"  # HTTPS
+      - "7687:7687"  # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/geronimo  # Replace with a secure password
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - neo4j_plugins:/plugins
+
+  webapp:
+    build: ./src
+    ports:
+      - "3000:3000"
+    depends_on:
+      - neo4j
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+  neo4j_plugins:

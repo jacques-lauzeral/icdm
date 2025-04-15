@@ -1,0 +1,248 @@
+/* Panel layout */
+.left-panel {
+    width: 300px;
+    min-width: 250px;
+    max-width: 400px;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+    border-right: 1px solid var(--border-color);
+    padding: 15px;
+    resize: horizontal;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-panel h2 {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 15px;
+}
+
+.tree-view {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.quick-add-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.add-button {
+    background: none;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.add-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Splitter */
+.splitter {
+    width: 5px;
+    background-color: var(--border-color);
+    cursor: col-resize;
+}
+
+/* Right panel */
+.right-panel {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Action bar */
+.action-bar {
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px var(--shadow-color);
+    margin-bottom: 20px;
+}
+
+.action-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.action-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.action-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+.action-button .icon {
+    font-size: 16px;
+}
+
+/* Empty state / setup guide */
+.context-empty {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px var(--shadow-color);
+    padding: 25px;
+}
+
+.setup-guide {
+    margin-top: 25px;
+}
+
+.setup-step {
+    display: flex;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.setup-step:last-of-type {
+    border-bottom: none;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h3 {
+    margin-bottom: 8px;
+    color: var(--primary-color);
+}
+
+/* Quick forms in setup guide */
+.quick-form {
+    display: flex;
+    margin: 15px 0;
+    gap: 8px;
+}
+
+.quick-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.quick-form button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+.setup-help {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.setup-help ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+/* Context panel */
+.context-panel {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px var(--shadow-color);
+    padding: 25px;
+}
+
+.breadcrumbs {
+    display: flex;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.breadcrumb-separator {
+    margin: 0 5px;
+    color: #bdc3c7;
+}
+
+.context-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.context-title {
+    display: flex;
+    align-items: center;
+}
+
+.context-title .icon {
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+.context-subtitle {
+    margin-top: 5px;
+    color: #7f8c8d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+    
+    .left-panel {
+        width: 100%;
+        max-width: none;
+        height: 300px;
+        min-height: 200px;
+        resize: vertical;
+    }
+    
+    .splitter {
+        width: 100%;
+        height: 5px;
+        cursor: row-resize;
+    }
+    
+    .action-group {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,95 @@
+/* Tree view styling */
+.tree-view {
+    font-family: var(--font-family);
+    line-height: 1.6;
+}
+
+.tree-node {
+    padding: 3px 0;
+}
+
+.tree-node-content {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.1s;
+}
+
+.tree-node-content:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.tree-node-content.active {
+    background-color: rgba(52, 152, 219, 0.1);
+    font-weight: bold;
+}
+
+.tree-node-content .icon {
+    margin-right: 5px;
+    width: 18px;
+    text-align: center;
+}
+
+.tree-children {
+    margin-left: 20px;
+    border-left: 1px dashed #ccc;
+    padding-left: 15px;
+}
+
+.tree-node-toggle {
+    cursor: pointer;
+    margin-right: 5px;
+    display: inline-block;
+    width: 12px;
+    text-align: center;
+    color: #666;
+}
+
+/* Tree node type styling */
+.tree-node[data-type="root"] .tree-node-content {
+    font-weight: bold;
+    padding: 6px 8px;
+}
+
+.tree-node[data-type="stakeholder"] .icon, 
+.tree-node[data-id="stakeholder-categories"] .icon {
+    color: #2ecc71;
+}
+
+.tree-node[data-type="service"] .icon, 
+.tree-node[data-id="services"] .icon {
+    color: #f39c12;
+}
+
+.tree-node[data-type="folder"] .icon, 
+.tree-node[data-id="drafting-groups"] .icon {
+    color: #3498db;
+}
+
+.tree-node[data-type="need"] .icon {
+    color: #e74c3c;
+}
+
+.tree-node[data-type="requirement"] .icon {
+    color: #9b59b6;
+}
+
+/* Tree node placeholder */
+.tree-placeholder {
+    color: #95a5a6;
+    font-style: italic;
+    padding: 4px 8px 4px 30px;
+    font-size: 0.9em;
+}
+
+/* Tree node count badge */
+.count-badge {
+    background-color: #bdc3c7;
+    color: white;
+    border-radius: 10px;
+    padding: 0 6px;
+    font-size: 0.7em;
+    margin-left: 5px;
+}
