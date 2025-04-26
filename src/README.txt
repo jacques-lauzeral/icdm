@@ -50,7 +50,7 @@ Properties:
 - name
 - description
 
-1.3 Operational Needs
+1.3 Operational Needs Management
 
 The node types required to the management of operational needs.
 
