@@ -204,3 +204,7 @@ The node types required to the management of user reviews.
 2.13 HAS_COMMENT
 - source - OperationalNeedVersion, OperationalRequirementVersion, OperationalChange, OperationalChangeMilestone, or OperationalDeploymentPlanEdition
 - target - Comment
+
+2.14 DEPENDS_ON
+- source - OperationalRequirementVersion
+- target - OperationalRequirementVersion
